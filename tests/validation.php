@@ -26,8 +26,14 @@ function rejects(callable $fn, string $label): void
 }
 check(fullName('  Maria  da Silva ', 'do credenciado') === 'Maria da Silva', 'normaliza nome completo');
 check(fullName('João D’Ávila', 'do paciente') === 'João D’Ávila', 'aceita nomes acentuados');
-rejects(fn() => fullName('Maria', 'do credenciado'), 'rejeita nome incompleto');
-rejects(fn() => fullName('<script> Teste', 'do paciente'), 'rejeita HTML');
+check(fullName('Maria', 'do credenciado') === 'Maria', 'aceita nome único');
+check(fullName('J. / Clínica 123 (EA)', 'do credenciado') === 'J. / Clínica 123 (EA)', 'aceita abreviações, números e símbolos');
+check(fullName('<script> Teste', 'do paciente') === '<script> Teste', 'aceita texto livre para exibição escapada');
+check(fullName('李', 'do paciente') === '李', 'aceita nome de um caractere');
+check(fullName(str_repeat('a', 160), 'do paciente') === str_repeat('a', 160), 'aceita limite do armazenamento');
+rejects(fn() => fullName('', 'do credenciado'), 'mantém campo obrigatório');
+rejects(fn() => fullName(" \t\n ", 'do paciente'), 'rejeita apenas espaços');
+rejects(fn() => fullName(str_repeat('a', 161), 'do paciente'), 'informa limite do armazenamento');
 check(whatsapp('+55 (11) 99999-1234') === '5511999991234', 'normaliza telefone');
 rejects(fn() => whatsapp('abc11999991234'), 'rejeita telefone com letras');
 rejects(fn() => whatsapp('11111111111'), 'rejeita telefone repetido');

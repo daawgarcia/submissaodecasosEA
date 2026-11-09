@@ -9,6 +9,7 @@ Segue o site institucional `estheticaligner.com.br`: azul principal `#4071CE`, a
 ## Funcionalidades
 
 - Nome Completo do Credenciado, WhatsApp e nome completo do paciente obrigatórios.
+- Campos de nome aceitam texto livre, inclusive nome único, abreviações, números e símbolos, sem exigir sobrenome ou formato. Permanecem obrigatórios, com limite técnico de 160 caracteres por campo; a exibição no painel é escapada como texto.
 - Sem cadastro para o remetente; a identidade informada não é automaticamente verificada.
 - Até 20 arquivos e **500 MiB (524.288.000 bytes)** por caso; STL, JPG, PNG e ZIP.
 - Upload em blocos de 2 MiB, progresso, repetição segura de blocos e retomada na mesma página após falhas. Atualizar a página exige iniciar outro envio.

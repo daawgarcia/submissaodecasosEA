@@ -9,9 +9,16 @@ const CHUNK_BYTES = 2 * 1024 * 1024;
 
 function fullName(string $value, string $label): string
 {
-    $value = trim(preg_replace('/\s+/u', ' ', $value) ?? '');
-    if (mb_strlen($value) > 160 || !preg_match('/^\p{L}[\p{L}\p{M}\'’.-]*(?: [\p{L}\p{M}\'’.-]+)+$/u', $value)) {
-        throw new \InvalidArgumentException("Informe o nome completo {$label}.");
+    $value = preg_replace('/\s+/u', ' ', $value);
+    if ($value === null) {
+        throw new \InvalidArgumentException("O nome {$label} contém texto inválido.");
+    }
+    $value = trim($value);
+    if ($value === '') {
+        throw new \InvalidArgumentException("Informe o nome {$label}.");
+    }
+    if (mb_strlen($value) > 160) {
+        throw new \InvalidArgumentException("O nome {$label} deve ter até 160 caracteres.");
     }
     return $value;
 }

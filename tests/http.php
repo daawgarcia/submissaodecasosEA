@@ -100,9 +100,9 @@ function refreshCsrf(string $page = ''): void
 try {
     refreshCsrf();
     assertHttp(http('action=create', [], false, false)['status'] === 403, 'rejeita requisição sem CSRF');
-    $invalid = http('action=create', ['dentist' => 'Maria', 'patient' => 'Paciente Teste', 'whatsapp' => '5511999991234', 'consent' => true]);
-    assertHttp($invalid['status'] === 422, 'exige nome completo no servidor (HTTP ' . $invalid['status'] . ', resposta: ' . substr($invalid['body'], 0, 300) . ')');
-    $data = ['dentist' => 'Dentista Teste Integração', 'patient' => 'Paciente Fictício Integração', 'whatsapp' => '5511999991234', 'consent' => true];
+    $invalid = http('action=create', ['dentist' => ' ', 'patient' => 'Paciente Teste', 'whatsapp' => '5511999991234', 'consent' => true]);
+    assertHttp($invalid['status'] === 422, 'mantém nome obrigatório no servidor');
+    $data = ['dentist' => 'Maria', 'patient' => 'J. / 123 <teste>', 'whatsapp' => '5511999991234', 'consent' => true];
     $created = http('action=create', $data);
     assertHttp($created['status'] === 200 && !empty($created['json']['token']), 'cria caso com autorização privada');
     $case = $created['json']['id'];
@@ -127,6 +127,7 @@ try {
     assertHttp($submitted['status'] === 200 && !empty($submitted['json']['protocol']), 'conclui caso e gera protocolo');
     assertHttp(http("action=submit&case=$case", [])['status'] === 200, 'conclusão repetida é idempotente');
     $record = row('SELECT * FROM ' . table('cases') . ' WHERE id = %s', [$case]);
+    assertHttp($record['dentist'] === 'Maria' && $record['patient'] === 'J. / 123 <teste>', 'aceita nome único, abreviação e caracteres livres');
     assertHttp($record['status'] === 'received' && (int) $record['mail_attempts'] === 0, 'salva caso e mantém uma notificação na fila');
     EnvioFacil\notify($record);
     $record = row('SELECT * FROM ' . table('cases') . ' WHERE id = %s', [$case]);
@@ -156,6 +157,7 @@ try {
     refreshCsrf('page=admin');
     $detail = http("page=admin&case=$case");
     assertHttp($detail['status'] === 200 && str_contains($detail['body'], 'badge-pending') && str_contains($detail['body'], 'Pendente — arquivo não baixado'), 'painel apresenta indicador pendente vermelho');
+    assertHttp(str_contains($detail['body'], 'J. / 123 &lt;teste&gt;') && !str_contains($detail['body'], 'J. / 123 <teste>'), 'exibe nome livre como texto escapado');
     $listing = http('page=admin&search=' . rawurlencode($created['json']['protocol']));
     assertHttp($listing['status'] === 200 && str_contains($listing['body'], 'badge-pending'), 'listagem apresenta caso pendente');
     $download = http("page=download&file=$testFile");
