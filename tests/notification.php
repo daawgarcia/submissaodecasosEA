@@ -32,6 +32,7 @@ try {
     $mail = $captured[0];
     if ($mail['to'] !== 'tamires@estheticaligner.com.br'
         || !in_array('Cc: doc@estheticaligner.com.br', $mail['headers'], true)
+        || !in_array('Cc: marketing@estheticaligner.com.br', $mail['headers'], true)
         || !str_contains($mail['subject'], $protocol)
         || str_contains($mail['message'], $case['patient'])
         || !empty($mail['attachments'])) {
@@ -40,7 +41,7 @@ try {
     if (notify($case) || count($captured) !== 1) {
         throw new RuntimeException('FAIL: notificação duplicada.');
     }
-    echo "OK: Tamires como destinatária, doc em Cc, protocolo sem dados do paciente, sem anexos e sem duplicação.\n";
+    echo "OK: Tamires como destinatária, doc e marketing em Cc, protocolo sem dados do paciente, sem anexos e sem duplicação.\n";
     echo "Transporte interceptado: nenhum e-mail real enviado neste teste.\n";
 } finally {
     remove_filter('pre_wp_mail', $intercept, PHP_INT_MAX);

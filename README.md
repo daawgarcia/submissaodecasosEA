@@ -15,8 +15,9 @@ Segue o site institucional `estheticaligner.com.br`: azul principal `#4071CE`, a
 - Arquivos fora da pasta pública; downloads somente para administradores autenticados.
 - Dentistas agrupados pelo WhatsApp autodeclarado, com nome completo exibido; mudanças de número geram grupos separados.
 - Pesquisa por dentista, paciente, telefone e protocolo, paginação e situação do caso.
-- Notificação para `tamires@estheticaligner.com.br`, com cópia (Cc) para `doc@estheticaligner.com.br`, contendo protocolo e link, sem dados do paciente ou anexos, processada pela rotina privada a cada cinco minutos.
+- Notificação para `tamires@estheticaligner.com.br`, com cópia (Cc) para `doc@estheticaligner.com.br` e `marketing@estheticaligner.com.br`, contendo protocolo e link, sem dados do paciente ou anexos, processada pela rotina privada a cada cinco minutos.
 - Histórico de início de downloads com usuário e horário de Brasília. A transmissão pelo servidor não comprova salvamento no dispositivo.
+- Indicador vermelho "Pendente — arquivo não baixado" enquanto houver arquivos sem registro de download; verde "Arquivo baixado" quando todos tiverem registro. A listagem mostra a quantidade baixada e os usuários responsáveis pelos últimos downloads de cada arquivo; os detalhes mostram cada arquivo separadamente. A situação clínica (recebido/em análise/enviado) permanece independente.
 - Usuários próprios, senhas com hash, troca de senha, expiração da sessão após 30 minutos de inatividade, proteção CSRF e limites de tentativas.
 
 ## Instalação

@@ -8,6 +8,17 @@ function sizeLabel(int $bytes): string
 {
     return number_format($bytes / 1048576, 2, ',', '.') . ' MB';
 }
+function downloadBadge(array $files): void
+{
+    $status = EnvioFacil\downloadStatus($files);
+    ?>
+    <div class="download-status">
+        <span class="badge <?= $status['complete'] ? 'badge-downloaded' : 'badge-pending' ?>"><?= e($status['label']) ?></span>
+        <?php if ($status['total'] > 1): ?><small><?= e($status['downloaded']) ?>/<?= e($status['total']) ?> arquivos baixados</small><?php endif; ?>
+        <?php if ($status['names']): ?><small>Baixado por: <?= e(implode(', ', $status['names'])) ?></small><?php endif; ?>
+    </div>
+    <?php
+}
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -107,10 +118,10 @@ function sizeLabel(int $bytes): string
     ?>
         <a class="back-link" href="?page=admin">← Todos os dentistas</a>
         <section class="card case-detail">
-            <div class="detail-heading"><h2><?= e($case['protocol']) ?></h2><span class="badge"><?= e($statuses[$case['status']]) ?></span></div>
+            <div class="detail-heading"><div><h2><?= e($case['protocol']) ?></h2><p class="muted">Situação do caso: <?= e($statuses[$case['status']]) ?></p></div><?php downloadBadge($files); ?></div>
             <dl class="case-data"><div><dt>Dentista</dt><dd><?= e($case['dentist']) ?></dd></div><div><dt>WhatsApp</dt><dd><a href="https://wa.me/<?= e($case['whatsapp']) ?>" target="_blank" rel="noopener noreferrer"><?= e($case['whatsapp']) ?></a></dd></div><div><dt>Paciente</dt><dd><?= e($case['patient']) ?></dd></div><div><dt>Recebido em (Brasília)</dt><dd><?= e((new DateTimeImmutable($case['submitted_at'], new DateTimeZone('UTC')))->setTimezone(new DateTimeZone('America/Sao_Paulo'))->format('d/m/Y H:i')) ?></dd></div></dl>
             <h3>Arquivos do caso</h3>
-            <ul class="download-list"><?php foreach ($files as $file): ?><li><div><strong><?= e($file['name']) ?></strong><small><?= e(sizeLabel((int) $file['size'])) ?></small><small><?php if ($file['last_download_at']): ?>Último download: <?= e($file['last_download_by']) ?> · <?= e((new DateTimeImmutable($file['last_download_at'], new DateTimeZone('UTC')))->setTimezone(new DateTimeZone('America/Sao_Paulo'))->format('d/m/Y H:i:s')) ?> (Brasília)<?php else: ?>Ainda não baixado<?php endif; ?></small></div><a class="secondary" href="?page=download&file=<?= e($file['id']) ?>">Baixar arquivo ↓</a></li><?php endforeach; ?></ul>
+            <ul class="download-list"><?php foreach ($files as $file): ?><li><div><strong><?= e($file['name']) ?></strong><small><?= e(sizeLabel((int) $file['size'])) ?></small><?php downloadBadge([$file]); ?><?php if ($file['last_download_at']): ?><small>Último download: <?= e($file['last_download_by']) ?> · <?= e((new DateTimeImmutable($file['last_download_at'], new DateTimeZone('UTC')))->setTimezone(new DateTimeZone('America/Sao_Paulo'))->format('d/m/Y H:i:s')) ?> (Brasília)</small><?php endif; ?></div><a class="secondary" href="?page=download&file=<?= e($file['id']) ?>">Baixar arquivo ↓</a></li><?php endforeach; ?></ul>
             <p class="muted">O registro indica o início do download pelo usuário autenticado. Não confirma que o arquivo foi salvo no dispositivo.</p>
             <details><summary>Histórico de downloads</summary>
                 <?php $downloads = rows('SELECT d.*, f.name FROM ' . table('downloads') . ' d JOIN ' . table('files') . ' f ON f.id = d.file_id WHERE f.case_id = %s ORDER BY d.id DESC LIMIT 100', [$caseId]); ?>
@@ -139,6 +150,14 @@ function sizeLabel(int $bytes): string
         $counts = row('SELECT COUNT(*) AS total, SUM(mail_status IN (\'failed\',\'pending\')) AS pending FROM ' . table('cases') . ' WHERE ' . $where, $args);
         $dentists = rows('SELECT whatsapp, MAX(dentist) AS dentist, COUNT(*) AS total FROM ' . table('cases') . " WHERE status <> 'draft' GROUP BY whatsapp ORDER BY dentist LIMIT 200");
         $cases = rows('SELECT * FROM ' . table('cases') . " WHERE $where ORDER BY submitted_at DESC LIMIT 25 OFFSET %d", [...$args, ($currentPage - 1) * 25]);
+        $caseFiles = [];
+        if ($cases) {
+            $placeholders = implode(',', array_fill(0, count($cases), '%s'));
+            $listedFiles = rows('SELECT case_id, last_download_at, last_download_by FROM ' . table('files') . " WHERE case_id IN ($placeholders) ORDER BY last_download_at DESC, id", array_column($cases, 'id'));
+            foreach ($listedFiles as $listedFile) {
+                $caseFiles[$listedFile['case_id']][] = $listedFile;
+            }
+        }
     ?>
         <div class="stats"><div class="card"><strong><?= e($counts['total']) ?></strong><span>casos encontrados</span></div><div class="card"><strong><?= e($counts['pending'] ?? 0) ?></strong><span>notificações pendentes ou com falha</span></div></div>
         <div class="admin-layout">
@@ -146,7 +165,7 @@ function sizeLabel(int $bytes): string
             <section class="card cases-list">
                 <form method="get" class="search"><input type="hidden" name="page" value="admin"><input type="hidden" name="dentist" value="<?= e($phone) ?>"><label class="sr-only" for="search">Buscar casos</label><input id="search" name="search" value="<?= e($search) ?>" placeholder="Buscar por dentista, paciente ou protocolo"><button class="secondary">Buscar</button></form>
                 <?php if (!$cases): ?><p class="empty">Nenhum caso encontrado.</p><?php endif; ?>
-                <?php foreach ($cases as $item): ?><a class="case-row" href="?page=admin&case=<?= e($item['id']) ?>"><div><span class="eyebrow"><?= e($item['protocol']) ?></span><h3><?= e($item['patient']) ?></h3><p><?= e($item['dentist']) ?></p><small><?= e((new DateTimeImmutable($item['submitted_at'], new DateTimeZone('UTC')))->setTimezone(new DateTimeZone('America/Sao_Paulo'))->format('d/m/Y H:i')) ?></small></div><span class="badge"><?= e($statuses[$item['status']]) ?></span></a><?php endforeach; ?>
+                <?php foreach ($cases as $item): ?><a class="case-row" href="?page=admin&case=<?= e($item['id']) ?>"><div><span class="eyebrow"><?= e($item['protocol']) ?></span><h3><?= e($item['patient']) ?></h3><p><?= e($item['dentist']) ?></p><small><?= e((new DateTimeImmutable($item['submitted_at'], new DateTimeZone('UTC')))->setTimezone(new DateTimeZone('America/Sao_Paulo'))->format('d/m/Y H:i')) ?></small><small class="case-workflow">Situação do caso: <?= e($statuses[$item['status']]) ?></small></div><?php downloadBadge($caseFiles[$item['id']] ?? []); ?></a><?php endforeach; ?>
                 <nav class="pagination" aria-label="Paginação"><?php if ($currentPage > 1): ?><a href="?<?= e(http_build_query(['page' => 'admin', 'search' => $search, 'dentist' => $phone, 'p' => $currentPage - 1])) ?>">← Anterior</a><?php endif; ?><span>Página <?= e($currentPage) ?></span><?php if ($currentPage * 25 < (int) $counts['total']): ?><a href="?<?= e(http_build_query(['page' => 'admin', 'search' => $search, 'dentist' => $phone, 'p' => $currentPage + 1])) ?>">Próxima →</a><?php endif; ?></nav>
             </section>
         </div>

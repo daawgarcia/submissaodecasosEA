@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace EnvioFacil;
 
 require_once __DIR__ . '/Validation.php';
+require_once __DIR__ . '/DownloadStatus.php';
 
 $configPath = dirname(__DIR__) . '/config.php';
 if (!is_file($configPath)) {
@@ -120,7 +121,7 @@ function notify(array $case): bool
                 . "\nAcesse o painel protegido para consultar os dados e baixar os arquivos:\n"
                 . config('public_url') . "/?page=admin&case=" . rawurlencode($id)
                 . "\n\nOs arquivos e dados do paciente não são enviados por e-mail.",
-            ['Cc: doc@estheticaligner.com.br']
+            ['Cc: doc@estheticaligner.com.br', 'Cc: marketing@estheticaligner.com.br']
         );
         if (!$sent) {
             error_log('[EnvioFacil mail] Envio recusado para protocolo ' . $case['protocol']);
