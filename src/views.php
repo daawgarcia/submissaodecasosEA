@@ -54,13 +54,13 @@ function downloadBadge(array $files): void
 
 <?php if ($page === 'upload'): ?>
     <section class="intro">
-        <div><p class="eyebrow">MENOS ETAPAS. MAIS SORRISOS.</p><h1>Seu próximo caso<br>começa aqui.</h1><p class="lead">Envie os arquivos do seu paciente para a nossa equipe.<br>Simples, organizado e sem precisar de cadastro.</p></div>
+        <div><p class="eyebrow">MENOS ETAPAS. MAIS SORRISOS.</p><h1>Envio Fácil</h1></div>
     </section>
     <div class="upload-layout">
         <form id="upload-form" class="card" autocomplete="off">
             <div class="section-title"><span class="step">01</span><div><h2>Identifique o caso</h2><p>Todos os campos abaixo são obrigatórios.</p></div></div>
             <div class="fields">
-                <label class="wide">Nome Completo do Credenciado <span class="required">*</span><input name="dentist" required maxlength="160" placeholder="Como podemos chamar você?" autocomplete="name"></label>
+                <label>Nome Completo do Credenciado <span class="required">*</span><input name="dentist" required maxlength="160" placeholder="Como podemos chamar você?" autocomplete="name"></label>
                 <label>WhatsApp com DDD <span class="required">*</span><input name="whatsapp" type="tel" required maxlength="25" placeholder="+55 (11) 99999-9999" autocomplete="tel"><small>Inclua o código do país se estiver fora do Brasil.</small></label>
                 <label>Nome completo do paciente <span class="required">*</span><input name="patient" required maxlength="160" placeholder="Nome e sobrenome"></label>
                 <label class="honeypot" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
@@ -82,10 +82,6 @@ function downloadBadge(array $files): void
             <p class="secure-caption">Seus arquivos não ficam disponíveis publicamente.</p>
             <noscript><p class="notice error">Ative o JavaScript para enviar os arquivos com segurança.</p></noscript>
         </form>
-        <aside class="sidebar">
-            <div class="card tips"><p class="eyebrow">ANTES DE ENVIAR</p><h2>Tudo pronto?</h2><ol><li><strong>Confira a identificação</strong><p>Use os nomes completos para facilitar a organização do caso.</p></li><li><strong>Reúna os arquivos</strong><p>Inclua os escaneamentos STL e as imagens necessárias. Se preferir, envie em ZIP.</p></li><li><strong>Guarde seu protocolo</strong><p>Ao concluir, você receberá um número para acompanhar o caso com a equipe.</p></li></ol></div>
-            <div class="help-note"><strong>O que acontece depois?</strong><p>Nossa equipe recebe uma notificação, confere os arquivos e realiza a submissão manual no Ortholab.</p></div>
-        </aside>
     </div>
     <section id="success" class="card success" hidden tabindex="-1"><span class="success-icon" aria-hidden="true">✓</span><p class="eyebrow">ARQUIVOS RECEBIDOS</p><h2>Pronto. Seu caso está com a gente.</h2><p>Guarde este protocolo para falar com nossa equipe:</p><strong id="protocol"></strong><p id="notification-note"></p><a class="primary" href="?">Enviar outro caso</a></section>
 <?php elseif ($page === 'login' || $page === 'setup'): ?>

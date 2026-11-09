@@ -6,6 +6,8 @@ Portal público para receber casos em `https://enviofacil.estheticaligner.com.br
 
 Segue o site institucional `estheticaligner.com.br`: azul principal `#4071CE`, azul claro `#6EC1E4`, títulos leves em Lato e botões arredondados com Open Sans. Cabeçalho e rodapé usam os logotipos oficiais já publicados no site. Fontes e imagens são servidas localmente, sem enviar dados do formulário a serviços externos. As mesmas regras visuais atendem o formulário, as confirmações, o login e o painel, com adaptações para dispositivos móveis.
 
+A página de envio tem introdução compacta com o título "Envio Fácil" e o lema "MENOS ETAPAS. MAIS SORRISOS.", sem textos de apresentação ou coluna lateral. O formulário ocupa a largura disponível, com os três campos lado a lado no desktop e empilhados no celular para dar prioridade à identificação e ao upload.
+
 ## Funcionalidades
 
 - Nome Completo do Credenciado, WhatsApp e nome completo do paciente obrigatórios.

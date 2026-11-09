@@ -90,14 +90,20 @@ main { max-width: 1220px; margin: auto; padding: 0 36px 64px; }
 .breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 24px 0 0; font-size: 12px; color: var(--muted); }
 .breadcrumb a { color: var(--muted); text-decoration: none; }
 .breadcrumb span[aria-current] { color: var(--blue-ink); }
-.intro { display: flex; justify-content: space-between; align-items: center; padding: 42px 0 40px; gap: 36px; }
+.intro { padding: 20px 0; }
+.intro .eyebrow { margin-bottom: 8px; }
+.intro h1 { font-size: 42px; margin-bottom: 0; }
 .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--blue-ink); margin: 0 0 16px; }
 h1 { font-size: clamp(36px, 4.7vw, 58px); font-weight: 300; line-height: 1.12; letter-spacing: -1.5px; color: var(--blue); margin: 0 0 22px; }
 h2 { font-size: 24px; font-weight: 400; line-height: 1.25; color: var(--blue); margin: 0; }
 h3 { font-size: 18px; font-weight: 700; margin: 16px 0 8px; }
 p { line-height: 1.75; }
-.lead { font-size: 17px; color: var(--ink); margin: 0; line-height: 1.8; font-weight: 300; }
-.upload-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 26px; align-items: start; }
+.upload-layout { display: block; }
+#upload-form .fields { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+#upload-form .section-title { margin-bottom: 18px; }
+#upload-form .divider { margin: 20px 0; }
+#upload-form .drop-zone { padding: 14px 16px; gap: 5px; }
+#upload-form .upload-icon { display: none; }
 .card { background: var(--white); border: 1px solid var(--line); border-radius: 18px; padding: 32px; box-shadow: 0 8px 30px #244a8906; }
 .section-title { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 26px; }
 .section-title h2 { margin: 1px 0 7px; }
@@ -149,17 +155,6 @@ input[type=checkbox] { accent-color: var(--blue); width: 17px; height: 17px; fle
 .secondary:hover { background: #e5eefe; }
 .submit { width: 100%; justify-content: space-between; margin-top: 25px; padding: 17px 26px; font-size: 14px; }
 .secure-caption { text-align: center; font-size: 11px; color: var(--muted); margin: 14px 0 0; }
-.tips { padding: 30px 25px; border-top: 3px solid var(--blue); }
-.tips h2 { font-size: 28px; font-weight: 300; }
-.tips ol { list-style: none; padding: 0; counter-reset: tips; margin: 28px 0 0; }
-.tips li { position: relative; padding-left: 35px; margin-bottom: 26px; counter-increment: tips; }
-.tips li:last-child { margin-bottom: 0; }
-.tips li::before { content: counter(tips); position: absolute; left: 0; top: -2px; background: var(--pale); border-radius: 50%; width: 25px; height: 25px; text-align: center; line-height: 25px; font-size: 11px; color: var(--blue-ink); }
-.tips li strong { font-size: 13px; }
-.tips li p { font-size: 13px; color: var(--muted); margin: 7px 0 0; }
-.help-note { padding: 27px 22px; color: var(--muted); font-size: 13px; }
-.help-note strong { color: var(--blue-ink); font-size: 15px; font-weight: 400; }
-.help-note p { margin: 9px 0; }
 .notice { border-radius: 10px; padding: 15px 19px; background: var(--pale); color: var(--blue-ink); font-size: 13px; margin: 20px 0; line-height: 1.7; }
 .notice.error { background: #fff0f1; color: var(--error); border: 1px solid #efcdd2; }
 .upload-progress { margin-top: 22px; }
@@ -230,12 +225,10 @@ summary { cursor: pointer; color: var(--blue-ink); }
 .sr-only, .honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 @media (min-width: 1500px) {
-    .intro { padding-top: 55px; }
     main { padding-bottom: 80px; }
 }
 
 @media (max-width: 1000px) {
-    .upload-layout { grid-template-columns: minmax(0, 1fr) 260px; gap: 20px; }
     .card { padding: 26px; }
     .header-inner, main { padding-left: 26px; padding-right: 26px; }
     .footer-inner { padding-left: 26px; padding-right: 26px; }
@@ -253,12 +246,9 @@ summary { cursor: pointer; color: var(--blue-ink); }
     .header nav .text-button { font-size: 12px; }
     main { padding: 0 20px 44px; }
     .breadcrumb { padding-top: 20px; font-size: 11px; }
-    .intro { padding: 32px 0 30px; }
-    .intro h1 { font-size: 43px; letter-spacing: -1px; }
-    .lead { font-size: 16px; font-weight: 400; }
-    .lead br { display: none; }
-    .upload-layout { grid-template-columns: 1fr; }
-    .sidebar { display: none; }
+    .intro { padding: 18px 0; }
+    .intro h1 { font-size: 36px; letter-spacing: -1px; }
+    #upload-form .fields { grid-template-columns: 1fr; gap: 16px; }
     .card { padding: 25px 21px; border-radius: 15px; }
     .fields { grid-template-columns: 1fr; }
     .wide { grid-column: auto; }
@@ -298,6 +288,6 @@ summary { cursor: pointer; color: var(--blue-ink); }
     .header .admin-link { padding: 9px 10px; font-size: 10px; }
     .header nav { gap: 8px; font-size: 11px; }
     main { padding-left: 15px; padding-right: 15px; }
-    .intro h1 { font-size: 38px; }
+    .intro h1 { font-size: 34px; }
     .card { padding: 22px 17px; }
 }
