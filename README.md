@@ -8,7 +8,7 @@ Segue o site institucional `estheticaligner.com.br`: azul principal `#4071CE`, a
 
 ## Funcionalidades
 
-- Nome completo do dentista, WhatsApp e nome completo do paciente obrigatórios.
+- Nome Completo do Credenciado, WhatsApp e nome completo do paciente obrigatórios.
 - Sem cadastro para o remetente; a identidade informada não é automaticamente verificada.
 - Até 20 arquivos e **500 MiB (524.288.000 bytes)** por caso; STL, JPG, PNG e ZIP.
 - Upload em blocos de 2 MiB, progresso, repetição segura de blocos e retomada na mesma página após falhas. Atualizar a página exige iniciar outro envio.

@@ -43,7 +43,7 @@ function createCase(array $data): array
     if (!empty($data['website'])) {
         throw new HttpError(400, 'Não foi possível validar o formulário.');
     }
-    $dentist = fullName((string) ($data['dentist'] ?? ''), 'do dentista');
+    $dentist = fullName((string) ($data['dentist'] ?? ''), 'do credenciado');
     $patient = fullName((string) ($data['patient'] ?? ''), 'do paciente');
     $phone = whatsapp((string) ($data['whatsapp'] ?? ''));
     if (($data['consent'] ?? false) !== true) {

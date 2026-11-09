@@ -97,10 +97,6 @@ h2 { font-size: 24px; font-weight: 400; line-height: 1.25; color: var(--blue); m
 h3 { font-size: 18px; font-weight: 700; margin: 16px 0 8px; }
 p { line-height: 1.75; }
 .lead { font-size: 17px; color: var(--ink); margin: 0; line-height: 1.8; font-weight: 300; }
-.intro-note { background: var(--pale); padding: 24px 28px; border-radius: 18px; border-left: 3px solid var(--sky); flex-shrink: 0; }
-.intro-note strong { display: block; font-size: 21px; line-height: 1.4; font-weight: 300; color: var(--blue-ink); }
-.intro-note p { font-size: 13px; color: var(--muted); margin: 10px 0 0; }
-.note-icon { display: block; color: var(--blue); font-size: 28px; margin-bottom: 10px; }
 .upload-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 26px; align-items: start; }
 .card { background: var(--white); border: 1px solid var(--line); border-radius: 18px; padding: 32px; box-shadow: 0 8px 30px #244a8906; }
 .section-title { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 26px; }
@@ -233,7 +229,6 @@ summary { cursor: pointer; color: var(--blue-ink); }
 @media (max-width: 1000px) {
     .upload-layout { grid-template-columns: minmax(0, 1fr) 260px; gap: 20px; }
     .card { padding: 26px; }
-    .intro-note { padding: 22px; }
     .header-inner, main { padding-left: 26px; padding-right: 26px; }
     .footer-inner { padding-left: 26px; padding-right: 26px; }
     .admin-layout { grid-template-columns: 220px minmax(0, 1fr); }
@@ -254,7 +249,6 @@ summary { cursor: pointer; color: var(--blue-ink); }
     .intro h1 { font-size: 43px; letter-spacing: -1px; }
     .lead { font-size: 16px; font-weight: 400; }
     .lead br { display: none; }
-    .intro-note { display: none; }
     .upload-layout { grid-template-columns: 1fr; }
     .sidebar { display: none; }
     .card { padding: 25px 21px; border-radius: 15px; }

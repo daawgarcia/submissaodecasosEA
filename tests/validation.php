@@ -24,9 +24,9 @@ function rejects(callable $fn, string $label): void
     }
     check(false, $label);
 }
-check(fullName('  Maria  da Silva ', 'do dentista') === 'Maria da Silva', 'normaliza nome completo');
+check(fullName('  Maria  da Silva ', 'do credenciado') === 'Maria da Silva', 'normaliza nome completo');
 check(fullName('João D’Ávila', 'do paciente') === 'João D’Ávila', 'aceita nomes acentuados');
-rejects(fn() => fullName('Maria', 'do dentista'), 'rejeita nome incompleto');
+rejects(fn() => fullName('Maria', 'do credenciado'), 'rejeita nome incompleto');
 rejects(fn() => fullName('<script> Teste', 'do paciente'), 'rejeita HTML');
 check(whatsapp('+55 (11) 99999-1234') === '5511999991234', 'normaliza telefone');
 rejects(fn() => whatsapp('abc11999991234'), 'rejeita telefone com letras');

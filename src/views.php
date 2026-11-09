@@ -44,13 +44,12 @@ function sizeLabel(int $bytes): string
 <?php if ($page === 'upload'): ?>
     <section class="intro">
         <div><p class="eyebrow">MENOS ETAPAS. MAIS SORRISOS.</p><h1>Seu próximo caso<br>começa aqui.</h1><p class="lead">Envie os arquivos do seu paciente para a nossa equipe.<br>Simples, organizado e sem precisar de cadastro.</p></div>
-        <aside class="intro-note"><span class="note-icon" aria-hidden="true">↑</span><strong>Do seu consultório<br>para a nossa equipe.</strong><p>Arquivos protegidos e acesso<br>restrito à equipe autorizada.</p></aside>
     </section>
     <div class="upload-layout">
         <form id="upload-form" class="card" autocomplete="off">
             <div class="section-title"><span class="step">01</span><div><h2>Identifique o caso</h2><p>Todos os campos abaixo são obrigatórios.</p></div></div>
             <div class="fields">
-                <label class="wide">Nome completo do dentista <span class="required">*</span><input name="dentist" required maxlength="160" placeholder="Como podemos chamar você?" autocomplete="name"></label>
+                <label class="wide">Nome Completo do Credenciado <span class="required">*</span><input name="dentist" required maxlength="160" placeholder="Como podemos chamar você?" autocomplete="name"></label>
                 <label>WhatsApp com DDD <span class="required">*</span><input name="whatsapp" type="tel" required maxlength="25" placeholder="+55 (11) 99999-9999" autocomplete="tel"><small>Inclua o código do país se estiver fora do Brasil.</small></label>
                 <label>Nome completo do paciente <span class="required">*</span><input name="patient" required maxlength="160" placeholder="Nome e sobrenome"></label>
                 <label class="honeypot" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
