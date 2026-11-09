@@ -48,7 +48,9 @@ function downloadBadge(array $files): void
     </div>
 </header>
 <main>
-<nav class="breadcrumb" aria-label="Você está aqui"><a href="https://estheticaligner.com.br/" target="_blank" rel="noopener">Esthetic Aligner</a><span aria-hidden="true">›</span><a href="?">Envio Fácil</a><?php if ($page !== 'upload'): ?><span aria-hidden="true">›</span><span aria-current="page"><?= e(match ($page) { 'admin' => 'Painel administrativo', 'login' => 'Acesso da equipe', 'setup' => 'Ativação', 'password' => 'Alterar senha', 'privacy' => 'Privacidade' }) ?></span><?php endif; ?></nav>
+<?php if ($page !== 'upload'): ?>
+<nav class="breadcrumb" aria-label="Você está aqui"><a href="https://estheticaligner.com.br/" target="_blank" rel="noopener">Esthetic Aligner</a><span aria-hidden="true">›</span><a href="?">Envio Fácil</a><span aria-hidden="true">›</span><span aria-current="page"><?= e(match ($page) { 'admin' => 'Painel administrativo', 'login' => 'Acesso da equipe', 'setup' => 'Ativação', 'password' => 'Alterar senha', 'privacy' => 'Privacidade' }) ?></span></nav>
+<?php endif; ?>
 <?php if ($error): ?><div class="notice error" role="alert"><?= e($error) ?></div><?php endif; ?>
 <?php if ($flash): ?><div class="notice" role="status"><?= e($flash) ?></div><?php endif; ?>
 
