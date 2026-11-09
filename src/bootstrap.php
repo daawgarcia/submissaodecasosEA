@@ -119,7 +119,8 @@ function notify(array $case): bool
             "Um novo caso foi recebido no Envio Fácil.\n\nProtocolo: " . $case['protocol']
                 . "\nAcesse o painel protegido para consultar os dados e baixar os arquivos:\n"
                 . config('public_url') . "/?page=admin&case=" . rawurlencode($id)
-                . "\n\nOs arquivos e dados do paciente não são enviados por e-mail."
+                . "\n\nOs arquivos e dados do paciente não são enviados por e-mail.",
+            ['Cc: doc@estheticaligner.com.br']
         );
         if (!$sent) {
             error_log('[EnvioFacil mail] Envio recusado para protocolo ' . $case['protocol']);
