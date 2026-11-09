@@ -242,9 +242,9 @@ summary { cursor: pointer; color: var(--blue-ink); }
 }
 
 @media (max-width: 760px) {
-    .header-inner { min-height: 82px; padding: 20px; gap: 16px; }
+    .header-inner { min-height: 82px; padding: 20px; gap: 16px; flex-wrap: wrap; }
     .brand img { width: 195px; }
-    .header nav { font-size: 12px; gap: 12px; }
+    .header nav { font-size: 12px; gap: 12px; margin-left: auto; }
     .header nav .main-site-link { display: none; }
     .header .admin-link { padding: 9px 13px; font-size: 11px; }
     .header nav .text-button { font-size: 12px; }
