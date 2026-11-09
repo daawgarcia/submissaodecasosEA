@@ -1,0 +1,13 @@
+Options -Indexes
+DirectoryIndex index.php
+<IfModule LiteSpeed>
+CacheLookup off
+</IfModule>
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+</IfModule>
+<FilesMatch "^(config|.*\.log|.*\.sql|.*\.bak)">
+Require all denied
+</FilesMatch>
